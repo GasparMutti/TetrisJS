@@ -39,6 +39,19 @@ export class Board {
     });
   }
 
+  resetBoard() {
+    this.matrix = this.createEmptyMatrix();
+  }
+
+  clone() {
+    return new Board({
+      rows: this.rows,
+      columns: this.columns,
+      emptyValue: this.emptyValue,
+      matrix: this.matrix.map((row) => [...row]),
+    });
+  }
+
   hasCollision(piece) {
     return piece.matrix.some((row, rowIndex) => {
       return row.some((block, colIndex) => {
@@ -48,6 +61,20 @@ export class Board {
           y: piece.position.y + rowIndex,
         };
         return !this.isInsideBoard(position) || !this.isEmptyBlock(position);
+      });
+    });
+  }
+
+  placePiece(piece) {
+    piece.matrix.forEach((row, rowIndex) => {
+      row.forEach((block, colIndex) => {
+        const position = {
+          x: piece.position.x + colIndex,
+          y: piece.position.y + rowIndex,
+        };
+        if (this.isInsideBoard(position) && block !== this.emptyValue) {
+          this.matrix[position.y][position.x] = piece.id;
+        }
       });
     });
   }
@@ -63,32 +90,5 @@ export class Board {
 
   isEmptyBlock(position) {
     return this.matrix[position.y]?.[position.x] === this.emptyValue;
-  }
-
-  placePiece(piece) {
-    piece.matrix.forEach((row, rowIndex) => {
-      row.forEach((block, colIndex) => {
-        const position = {
-          x: piece.position.x + colIndex,
-          y: piece.position.y + rowIndex,
-        };
-        if (this.isInsideBoard(position) && block !== this.emptyValue) {
-          this.matrix[position.y][position.x] = block;
-        }
-      });
-    });
-  }
-
-  resetBoard() {
-    this.matrix = this.createEmptyMatrix();
-  }
-
-  clone() {
-    return new Board({
-      rows: this.rows,
-      columns: this.columns,
-      emptyValue: this.emptyValue,
-      matrix: this.matrix.map((row) => [...row]),
-    });
   }
 }
