@@ -1,9 +1,9 @@
 export class Board {
-  constructor({rows, columns, emptyValue}) {
+  constructor({rows, columns, emptyValue, matrix}) {
     this.rows = rows;
     this.columns = columns;
     this.emptyValue = emptyValue;
-    this.matrix = this.createEmptyMatrix();
+    this.matrix = matrix ?? this.createEmptyMatrix();
   }
 
   createEmptyMatrix() {
@@ -88,6 +88,7 @@ export class Board {
       rows: this.rows,
       columns: this.columns,
       emptyValue: this.emptyValue,
+      matrix: this.matrix.map((row) => [...row]),
     });
   }
 }
