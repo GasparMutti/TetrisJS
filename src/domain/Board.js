@@ -82,4 +82,12 @@ export class Board {
   resetBoard() {
     this.matrix = this.createEmptyMatrix();
   }
+
+  clone() {
+    return new Board({
+      rows: this.rows,
+      columns: this.columns,
+      emptyValue: this.emptyValue,
+    });
+  }
 }
