@@ -3,15 +3,15 @@ export class Board {
     this.rows = rows;
     this.columns = columns;
     this.emptyValue = emptyValue;
-    this.board = this.createBoardEmpty();
+    this.matrix = this.createEmptyMatrix();
   }
 
-  createBoardEmpty() {
-    const board = Array.from(
+  createEmptyMatrix() {
+    const matrix = Array.from(
       {length: this.rows},
       this.createRow(this.emptyValue)
     );
-    return board;
+    return matrix;
   }
 
   createRow(fillValue) {
@@ -21,7 +21,7 @@ export class Board {
   getCompletedRows() {
     const completedRows = [];
 
-    this.board.forEach((row, rowIndex) => {
+    this.matrix.forEach((row, rowIndex) => {
       if (this.isCompletedRow(row)) completedRows.push(rowIndex);
     });
 
@@ -34,8 +34,8 @@ export class Board {
 
   deleteCompletedRows(indexList) {
     indexList.forEach((indexRow, offset) => {
-      this.board.splice(indexRow + offset, 1);
-      this.board.unshift(this.createRow(this.emptyValue));
+      this.matrix.splice(indexRow + offset, 1);
+      this.matrix.unshift(this.createRow(this.emptyValue));
     });
   }
 
@@ -62,7 +62,7 @@ export class Board {
   }
 
   isEmptyBlock(position) {
-    return this.board[position.y]?.[position.x] === this.emptyValue;
+    return this.matrix[position.y]?.[position.x] === this.emptyValue;
   }
 
   placePiece(piece) {
@@ -73,13 +73,13 @@ export class Board {
           y: piece.position.y + rowIndex,
         };
         if (this.isInsideBoard(position) && block !== this.emptyValue) {
-          this.board[position.y][position.x] = block;
+          this.matrix[position.y][position.x] = block;
         }
       });
     });
   }
 
   resetBoard() {
-    this.board = this.createEmptyBoard();
+    this.matrix = this.createEmptyMatrix();
   }
 }
