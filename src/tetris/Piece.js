@@ -1,7 +1,7 @@
 export class Piece {
-  constructor({id, nombre, color, matrix, position}) {
+  constructor({id, name, color, matrix, position}) {
     this.id = id;
-    this.nombre = nombre;
+    this.name = name;
     this.color = color;
     this.matrix = matrix;
     this.position = position;
