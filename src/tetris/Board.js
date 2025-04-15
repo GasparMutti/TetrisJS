@@ -7,8 +7,7 @@ export class Board {
   }
 
   createEmptyMatrix() {
-    const matrix = Array.from(
-      {length: this.rows},
+    const matrix = Array.from({length: this.rows}, () =>
       this.createRow(this.emptyValue)
     );
     return matrix;
