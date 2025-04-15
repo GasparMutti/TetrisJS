@@ -80,5 +80,6 @@ export class Tetris {
     this.board.reset();
     this.piecesBag.fillBag();
     this.spawnPiece();
+    this.eventBus.emit("tetris:reset");
   }
 }
