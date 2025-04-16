@@ -1,0 +1,119 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+@media screen and (prefers-color-scheme: light) {
+  :root {
+    --primaryColor: #ffd900;
+    --secondaryColor: #242424;
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --primaryColor: #242424;
+    --secondaryColor: #ffd900;
+  }
+}
+
+body {
+  min-height: 100vh;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.tetrisLogo {
+  padding: 8px 0 8px 16px;
+  background: var(--secondaryColor);
+  font-size: 58px;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 4px inset var(--primaryColor);
+  animation: tetrisLogo 500ms ease 1 forwards;
+}
+
+.tetrisLogo span {
+  margin-left: 16px;
+  padding: 8px 16px;
+  background: black;
+  color: var(--secondaryColor);
+}
+
+menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  animation: tetrisMenu 500ms ease 1 forwards;
+}
+
+.tetrisBtn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 4px solid black;
+  background: var(--secondaryColor);
+  color: var(--primaryColor);
+  text-align: center;
+  text-decoration: none;
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 8px;
+  transition: scale 0.5s;
+}
+
+.tetrisBtn:hover {
+  scale: 0.98;
+}
+
+.primary {
+  background: black;
+  color: var(--secondaryColor);
+  animation: tetrisBtnPrimary 1.5s ease 3;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+@keyframes tetrisLogo {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes tetrisMenu {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes tetrisBtnPrimary {
+  50% {
+    box-shadow: 0 0 24px var(--secondaryColor);
+    transform: scale(1.05, 1.05);
+  }
+  100% {
+    box-shadow: 0 0 0px var(--secondaryColor);
+    transform: scale(1);
+  }
+}
