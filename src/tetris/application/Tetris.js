@@ -1,3 +1,5 @@
+import {EVENTS} from "../domain/events/events.js";
+
 export class Tetris {
   constructor({board, piecesBag, pieceFactory, eventBus}) {
     this.board = board;
@@ -16,8 +18,8 @@ export class Tetris {
     });
 
     this.board.hasCollision(this.piece)
-      ? this.eventBus.emit("tetris:lost")
-      : this.eventBus.emit("piece:spawned");
+      ? this.eventBus.emit(EVENTS.GAME_END)
+      : this.eventBus.emit(EVENTS.PIECE_SPAWNED, this.getState());
   }
 
   getStartPosition(matrix) {
@@ -35,11 +37,11 @@ export class Tetris {
     newPiece.move(direction);
 
     if (this.board.hasCollision(newPiece)) {
-      return this.eventBus.emit("piece:collision");
+      return this.eventBus.emit(EVENTS.PIECE_COLLISION);
     }
 
     this.piece = newPiece;
-    this.eventBus.emit("piece:moved");
+    this.eventBus.emit(EVENTS.PIECE_MOVED, this.getState());
   }
 
   dropPiece() {
@@ -51,15 +53,15 @@ export class Tetris {
     }
 
     this.piece = newPiece;
-    this.eventBus.emit("piece:moved");
+    this.eventBus.emit(EVENTS.PIECE_MOVED, this.getState());
   }
 
   mergePiece() {
     this.board.placePiece(this.piece);
-    this.eventBus.emit("piece:merged");
+    this.eventBus.emit(EVENTS.PIECE_MERGED, this.getState());
     const completedRows = this.board.getCompletedRows();
     if (completedRows.length > 0) {
-      this.eventBus.emit("rows:completed", completedRows);
+      this.eventBus.emit(EVENTS.BOARD_COMPLETED_ROWS, completedRows);
     }
     this.spawnPiece();
   }
@@ -69,17 +71,17 @@ export class Tetris {
     newPiece.rotate();
 
     if (this.board.hasCollision(newPiece)) {
-      return this.eventBus.emit("piece:collision");
+      return this.eventBus.emit(EVENTS.PIECE_COLLISION);
     }
 
     this.piece = newPiece;
-    this.eventBus.emit("piece:moved");
+    this.eventBus.emit(EVENTS.PIECE_MOVED);
   }
 
   reset() {
     this.board.reset();
     this.piecesBag.fillBag();
     this.spawnPiece();
-    this.eventBus.emit("tetris:reset");
+    this.eventBus.emit(EVENTS.GAME_RESET);
   }
 }
