@@ -177,7 +177,7 @@ export class CanvasRenderer {
 
   deleteCompletedRows(indexList) {
     for (const indexRow of indexList) {
-      this.context.fillRect(0, indexRow, 10, 1);
+      this.context.fillRect(0, indexRow, this.columns, 1);
     }
     this.eventBus.emit(EVENTS.BOARD_DELETED_ROWS, indexList);
   }
