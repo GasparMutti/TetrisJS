@@ -7,10 +7,16 @@ export class Piece {
     this.position = position;
   }
 
-  move(direction) {
-    if (direction === "right") this.position.x++;
-    if (direction === "down") this.position.y++;
-    if (direction === "left") this.position.x--;
+  moveRight() {
+    this.position.x++;
+  }
+
+  moveDown() {
+    this.position.y++;
+  }
+
+  moveLeft() {
+    this.position.x--;
   }
 
   rotate() {
