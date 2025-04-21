@@ -51,7 +51,37 @@ export class Board {
     return this.matrix[position.y]?.[position.x] === this.emptyValue;
   }
 
-  resetBoard() {
+  hasCollision(piece) {
+    return piece.matrix.some((row, rowIndex) => {
+      return row.some((block, colIndex) => {
+        if (block === this.board.emptyValue) return false;
+        const position = {
+          x: piece.position.x + colIndex,
+          y: piece.position.y + rowIndex,
+        };
+        return (
+          !this.board.isInsideBoard(position) ||
+          !this.board.isEmptyBlock(position)
+        );
+      });
+    });
+  }
+
+  placePiece(piece) {
+    piece.matrix.forEach((row, rowIndex) => {
+      row.forEach((block, colIndex) => {
+        if (block !== this.emptyValue) {
+          const position = {
+            x: piece.position.x + colIndex,
+            y: piece.position.y + rowIndex,
+          };
+          this.matrix[position.y][position.x] = block;
+        }
+      });
+    });
+  }
+
+  reset() {
     this.matrix = this.createEmptyMatrix();
   }
 }
