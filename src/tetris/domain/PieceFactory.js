@@ -1,4 +1,4 @@
-import {Piece} from "./Piece";
+import {Piece} from "./entities/Piece";
 
 export class PieceFactory {
   constructor() {}
