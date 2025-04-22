@@ -31,7 +31,7 @@ export class Board {
     return row.every((block) => block !== this.emptyValue);
   }
 
-  deleteCompletedRows(indexList) {
+  deleteRows(indexList) {
     indexList.forEach((indexRow, offset) => {
       this.matrix.splice(indexRow + offset, 1);
       this.matrix.unshift(this.createRow(this.emptyValue));
