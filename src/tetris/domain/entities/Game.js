@@ -1,9 +1,17 @@
 export class Game {
-  constructor({piecesBag, scoreService, board, piece}) {
+  constructor({piecesBag, board, piece, score = 0}) {
     this.piecesBag = piecesBag;
-    this.scoreService = scoreService;
     this.board = board;
     this.piece = piece ?? this.spawnPiece();
+    this.score = score;
+  }
+
+  getState() {
+    return {
+      piece: this.piece,
+      board: this.board,
+      score: this.score,
+    };
   }
 
   spawnPiece() {
@@ -36,10 +44,32 @@ export class Game {
     return true;
   }
 
+  getScore() {
+    return this.score;
+  }
+
+  setScore(score) {
+    this.score = score;
+  }
+
+  calculateScore(deletedRows) {
+    const scorePerRow = {
+      1: 100,
+      2: 300,
+      3: 500,
+      4: 800,
+    };
+    return scorePerRow[deletedRows] ?? 0;
+  }
+
+  resetScore() {
+    this.score = 0;
+  }
+
   reset() {
     this.piecesBag.fillBag();
     this.board.reset();
     this.spawnPiece();
-    this.scoreService.resetScore();
+    this.resetScore();
   }
 }
