@@ -3,6 +3,7 @@ export const EVENTS = {
   BOARD_COMPLETED_ROWS: "board:completedRows",
   BOARD_DELETED_ROWS: "board:deletedRows",
   GAME_START: "game:start",
+  GAME_STARTED: "game:started",
   GAME_PAUSED: "game:paused",
   GAME_RESUMED: "game:resumed",
   GAME_OVER: "game:over",
