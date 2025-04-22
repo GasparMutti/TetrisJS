@@ -1,3 +1,9 @@
+export const PIECE_DIRECTIONS = {
+  RIGHT: "right",
+  DOWN: "down",
+  LEFT: "left",
+};
+
 export class Piece {
   constructor({id, name, color, matrix, position}) {
     this.id = id;
@@ -7,16 +13,18 @@ export class Piece {
     this.position = position;
   }
 
-  moveRight() {
-    this.position.x++;
-  }
-
-  moveDown() {
-    this.position.y++;
-  }
-
-  moveLeft() {
-    this.position.x--;
+  move(direction) {
+    switch (direction) {
+      case PIECE_DIRECTIONS.RIGHT:
+        this.position.x += 1;
+        break;
+      case PIECE_DIRECTIONS.DOWN:
+        this.position.y += 1;
+        break;
+      case PIECE_DIRECTIONS.LEFT:
+        this.position.x -= 1;
+        break;
+    }
   }
 
   rotate() {
