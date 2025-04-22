@@ -11,27 +11,9 @@ export class Game {
     return true;
   }
 
-  movePieceRight() {
+  movePiece(direction) {
     const newPiece = this.piece.clone();
-    newPiece.moveRight();
-
-    if (this.board.hasCollision(newPiece)) return false;
-    this.piece = newPiece;
-    return true;
-  }
-
-  movePieceDown() {
-    const newPiece = this.piece.clone();
-    newPiece.moveDown();
-
-    if (this.board.hasCollision(newPiece)) return false;
-    this.piece = newPiece;
-    return true;
-  }
-
-  movePieceLeft() {
-    const newPiece = this.piece.clone();
-    newPiece.moveLeft();
+    newPiece.move(direction);
 
     if (this.board.hasCollision(newPiece)) return false;
     this.piece = newPiece;
