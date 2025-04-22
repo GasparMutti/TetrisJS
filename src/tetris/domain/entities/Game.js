@@ -1,8 +1,9 @@
 export class Game {
-  constructor({board, piecesBag}) {
-    this.board = board;
+  constructor({piecesBag, scoreService, board, piece}) {
     this.piecesBag = piecesBag;
-    this.spawnPiece();
+    this.scoreService = scoreService;
+    this.board = board;
+    this.piece = piece ?? this.spawnPiece();
   }
 
   spawnPiece() {
@@ -36,8 +37,9 @@ export class Game {
   }
 
   reset() {
-    this.board.reset();
     this.piecesBag.fillBag();
+    this.board.reset();
     this.spawnPiece();
+    this.scoreService.resetScore();
   }
 }
