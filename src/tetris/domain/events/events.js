@@ -7,6 +7,6 @@ export const EVENTS = {
   BOARD_DELETED_ROWS: "board:deletedRows",
   GAME_START: "game:start",
   GAME_PAUSE: "game:pause",
-  GAME_LOST: "game:lost",
+  GAME_OVER: "game:over",
   GAME_RESET: "game:reset",
 };
