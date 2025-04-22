@@ -1,4 +1,4 @@
-export class Tetris {
+export class Game {
   constructor({board, piecesBag}) {
     this.board = board;
     this.piecesBag = piecesBag;
