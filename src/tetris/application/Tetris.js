@@ -10,40 +10,41 @@ export class Tetris {
   }
 
   registerEvents() {
-    this.eventBus.on(EVENTS.GAME_START, () => this.start.bind(this));
-    this.eventBus.on(EVENTS.GAME_TICK, this.tick.bind(this));
     this.eventBus.on(EVENTS.INPUT_RIGHT, () =>
       this.handleMove(PIECE_DIRECTIONS.RIGHT)
     );
-    this.eventBus.on(EVENTS.INPUT_DOWN, this.tick.bind(this));
+    this.eventBus.on(EVENTS.INPUT_DOWN, this.dropPiece.bind(this));
     this.eventBus.on(EVENTS.INPUT_LEFT, () =>
       this.handleMove(PIECE_DIRECTIONS.LEFT)
     );
-    this.eventBus.on(EVENTS.INPUT_ROTATE, () =>
-      this.handleRotate(this.handleRotate())
-    );
+    this.eventBus.on(EVENTS.INPUT_ROTATE, () => this.handleRotate());
     this.eventBus.on(EVENTS.GAME_RESET, this.reset.bind(this));
   }
 
-  tick() {
+  dropPiece() {
     const pieceMoved = this.game.movePiece(PIECE_DIRECTIONS.DOWN);
     if (!pieceMoved) {
       this.game.placePiece();
-      const completedRows = this.game.board.getCompletedRows();
-      if (completedRows.length > 0) {
+      const completedRows = this.game.getCompletedRows();
+
+      if (completedRows.length) {
+        const beforeState = this.game.getState();
         this.game.board.deleteRows(completedRows);
-        const score = this.game.calculateScore(completedRows.length);
-        this.game.setScore(this.game.getScore() + score);
-        this.eventBus.emit(EVENTS.SCORE_UPDATED, this.game.getScore());
-        this.eventBus.emit(EVENTS.BOARD_DELETED_ROWS, completedRows);
+        this.eventBus.emit(EVENTS.BOARD_DELETED_ROWS, {
+          beforeState,
+          afterState: this.game.getState(),
+          completedRows,
+        });
       }
-      const newPiece = this.game.spawnPiece();
-      if (!newPiece) {
+
+      const pieceSpawned = this.game.spawnPiece();
+      if (!pieceSpawned) {
         this.isGameOver = true;
-        this.eventBus.emit(EVENTS.GAME_OVER, this.game.getState());
+        return this.eventBus.emit(EVENTS.GAME_OVER, this.game.getState());
       }
-      this.eventBus.emit(EVENTS.GAME_UPDATED, this.game.getState());
     }
+
+    return this.eventBus.emit(EVENTS.GAME_UPDATED, this.game.getState());
   }
 
   handleMove(direction) {
