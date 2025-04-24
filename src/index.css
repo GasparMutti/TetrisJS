@@ -31,7 +31,7 @@ main {
   display: flex;
 }
 
-.container {
+.tetrisContainer {
   width: fit-content;
   margin: 0 auto;
   display: flex;
